@@ -9,3 +9,4 @@ text = "Hello! 毕老师！1 + 1 = 2 ĠÑĤÐ²ÑĬÑĢ"
 
 result = deepseek_tokenizer.encode(text)
 print(result)
+print(f"len(result): {len(result)}")
