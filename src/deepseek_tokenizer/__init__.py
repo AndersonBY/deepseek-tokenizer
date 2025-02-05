@@ -72,4 +72,4 @@ class DeepSeekTokenizer:
         return [self._tokenizer.id_to_token(i) or "" for i in ids]
 
 
-deepseek_tokenizer = DeepSeekTokenizer.from_pretrained(BASE_FOLDER)
+ds_token = deepseek_tokenizer = DeepSeekTokenizer.from_pretrained(BASE_FOLDER)
