@@ -1,5 +1,7 @@
 # DeepSeek Tokenizer
 
+English | [中文](README_ZH.md)
+
 ## Introduction
 
 DeepSeek Tokenizer is an efficient and lightweight tokenization libraries which doesn't require heavy dependencies like the `transformers` library, DeepSeek Tokenizer solely relies on the `tokenizers` library, making it a more streamlined and efficient choice for tokenization tasks.
@@ -17,13 +19,13 @@ pip install deepseek_tokenizer
 Below is a simple example demonstrating how to use DeepSeek Tokenizer to encode text:
 
 ```python
-from deepseek_tokenizer import deepseek_tokenizer
+from deepseek_tokenizer import ds_token
 
 # Sample text
 text = "Hello! 毕老师！1 + 1 = 2 ĠÑĤÐ²ÑĬÑĢ"
 
 # Encode text
-result = deepseek_tokenizer.encode(text)
+result = ds_token.encode(text)
 
 # Print result
 print(result)
@@ -32,7 +34,7 @@ print(result)
 ### Output
 
 ```
-[17464, 0, 207, 7689, 7842, 2160, 16, 919, 207, 16, 403, 207, 17, 20877, 241, 65469, 126, 97, 70795, 12094, 65469, 126, 105, 65469, 126, 95]
+[19923, 3, 223, 5464, 5008, 1175, 19, 940, 223, 19, 438, 223, 20, 6113, 257, 76589, 131, 100, 76032, 1628, 76589, 131, 108, 76589, 131, 98]
 ```
 
 ## License
