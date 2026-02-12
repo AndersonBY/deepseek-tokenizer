@@ -4,7 +4,7 @@ English | [中文](README_ZH.md)
 
 ## Introduction
 
-DeepSeek Tokenizer is an efficient and lightweight tokenization libraries which doesn't require heavy dependencies like the `transformers` library, DeepSeek Tokenizer solely relies on the `tokenizers` library, making it a more streamlined and efficient choice for tokenization tasks.
+DeepSeek Tokenizer is an efficient and lightweight tokenization library with no third-party runtime dependencies, making it a streamlined and efficient choice for tokenization tasks.
 
 ## Installation
 

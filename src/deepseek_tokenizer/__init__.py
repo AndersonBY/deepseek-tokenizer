@@ -1,22 +1,22 @@
 import json
 from pathlib import Path
-from typing import List, Union, Optional
+from typing import List, Optional, Union
 
-from tokenizers import Tokenizer
+from .py_tokenizer import PurePythonTokenizer
 
 
 BASE_FOLDER = Path(__file__).parent
 
 
 class DeepSeekTokenizer:
-    def __init__(self, tokenizer: Tokenizer, model_max_length: int = int(1e30)):
+    def __init__(self, tokenizer: PurePythonTokenizer, model_max_length: int = int(1e30)):
         self._tokenizer = tokenizer
         self.model_max_length = model_max_length
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path: Union[str, Path]):
         path = Path(pretrained_model_name_or_path)
-        tokenizer = Tokenizer.from_file(str(path / "tokenizer.json"))
+        tokenizer = PurePythonTokenizer(path / "tokenizer.json")
 
         # 从配置文件中获取model_max_length
         config_file = path / "tokenizer_config.json"
@@ -38,8 +38,7 @@ class DeepSeekTokenizer:
         max_length: Optional[int] = None,
         return_tensors: Optional[str] = None,
     ) -> Union[List[int], List[List[int]]]:
-        encoding = self._tokenizer.encode(text, pair=text_pair or None, add_special_tokens=add_special_tokens)
-        return encoding.ids
+        return self._tokenizer.encode(text, add_special_tokens=add_special_tokens)
 
     def decode(
         self,
@@ -57,9 +56,11 @@ class DeepSeekTokenizer:
 
     @property
     def vocab_size(self) -> int:
-        return self._tokenizer.get_vocab_size(with_added_tokens=True)
+        return self._tokenizer.get_vocab_size()
 
-    def convert_tokens_to_ids(self, tokens: Union[str, List[str]]) -> Union[int, List[int]]:
+    def convert_tokens_to_ids(
+        self, tokens: Union[str, List[str]]
+    ) -> Union[Optional[int], List[Optional[int]]]:
         if isinstance(tokens, str):
             return self._tokenizer.token_to_id(tokens)
         return [self._tokenizer.token_to_id(t) for t in tokens]
@@ -68,8 +69,8 @@ class DeepSeekTokenizer:
         self, ids: Union[int, List[int]], skip_special_tokens: bool = False
     ) -> Union[str, List[str]]:
         if isinstance(ids, int):
-            return self._tokenizer.id_to_token(ids) or ""
-        return [self._tokenizer.id_to_token(i) or "" for i in ids]
+            return self._tokenizer.id_to_token_str(ids) or ""
+        return [self._tokenizer.id_to_token_str(i) or "" for i in ids]
 
 
 ds_token = deepseek_tokenizer = DeepSeekTokenizer.from_pretrained(BASE_FOLDER)

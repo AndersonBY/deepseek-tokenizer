@@ -4,7 +4,7 @@
 
 ## 介绍
 
-DeepSeek Tokenizer 是一个高效且轻量级的分词库，它不需要像 `transformers` 库那样庞大的依赖项。DeepSeek Tokenizer 仅依赖于 `tokenizers` 库，使其成为分词任务中更精简和高效的选择。
+DeepSeek Tokenizer 是一个高效且轻量级的分词库，运行时不依赖任何第三方库，是分词任务中更精简和高效的选择。
 
 
 ## 安装

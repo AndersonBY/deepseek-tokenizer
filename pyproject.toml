@@ -1,13 +1,16 @@
 [project]
 name = "deepseek-tokenizer"
-version = "0.1.3"
+version = "0.2.0"
 description = "Lightweight tokenizer for deepseek"
 authors = [{ name = "Anderson", email = "andersonby@163.com" }]
-dependencies = ["tokenizers>=0.20.0"]
+dependencies = []
 requires-python = ">=3.8"
 readme = "README.md"
 license = { text = "MIT" }
 urls = { Homepage = "https://github.com/AndersonBY/deepseek-tokenizer" }
+
+[project.optional-dependencies]
+dev = ["ruff", "ty"]
 
 [build-system]
 requires = ["pdm-backend"]
