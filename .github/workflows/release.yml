@@ -34,7 +34,9 @@ jobs:
         run: pdm run python tests/test_simple.py
 
       - name: Run linting
-        run: pdm run ruff check .
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: check .
 
       - name: Build package
         run: pdm build
