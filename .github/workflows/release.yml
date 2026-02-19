@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    environment:
+      name: pypi
+      url: https://pypi.org/p/deepseek-tokenizer
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version: "3.12"
+          cache: true
+
+      - name: Install dependencies
+        run: pdm install --dev
+
+      - name: Run tests
+        run: pdm run python tests/test_simple.py
+
+      - name: Run linting
+        run: pdm run ruff check .
+
+      - name: Build package
+        run: pdm build
+
+      - name: Generate release notes
+        id: changelog
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || true)
+
+          {
+            echo "version=${VERSION}"
+            echo "changelog<<EOF"
+            if [ -n "${PREVIOUS_TAG}" ]; then
+              git log --pretty=format:"- %s (%h)" "${PREVIOUS_TAG}..${GITHUB_REF_NAME}"
+            else
+              echo "- Initial release"
+            fi
+            echo
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: v${{ steps.changelog.outputs.version }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          files: dist/*
+          draft: false
+          prerelease: false
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
