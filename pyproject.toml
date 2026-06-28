@@ -1,7 +1,7 @@
 [project]
 name = "deepseek-tokenizer"
-version = "0.2.0"
-description = "Lightweight tokenizer for deepseek"
+version = "0.3.0"
+description = "Lightweight tokenizer for DeepSeek V4 series"
 authors = [{ name = "Anderson", email = "andersonby@163.com" }]
 dependencies = []
 requires-python = ">=3.8"

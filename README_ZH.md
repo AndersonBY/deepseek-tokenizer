@@ -6,6 +6,8 @@
 
 DeepSeek Tokenizer 是一个高效且轻量级的分词库，运行时不依赖任何第三方库，是分词任务中更精简和高效的选择。
 
+当前版本使用 `deepseek-ai/DeepSeek-V4-Pro` 和 `deepseek-ai/DeepSeek-V4-Flash` 共用的 DeepSeek-V4 系列分词器。内置分词器支持 V4 的 thinking、DSML、快速指令和多模态占位符等特殊 token，`model_max_length` 为 1,048,576 tokens。
+
 
 ## 安装
 
@@ -38,6 +40,29 @@ print(result)
 
 ```
 [19923, 3, 223, 5464, 5008, 1175, 19, 940, 223, 19, 438, 223, 20, 6113, 257, 76589, 131, 100, 76032, 1628, 76589, 131, 108, 76589, 131, 98]
+```
+
+## DeepSeek-V4 Tokens
+
+```python
+from deepseek_tokenizer import ds_token
+
+print(ds_token.model_max_length)
+print(ds_token.convert_tokens_to_ids("<think>"))
+print(ds_token.convert_tokens_to_ids("</think>"))
+print(ds_token.convert_tokens_to_ids("｜DSML｜"))
+print(ds_token.convert_tokens_to_ids("<｜latest_reminder｜>"))
+```
+
+
+### 输出
+
+```
+1048576
+128821
+128822
+128825
+128828
 ```
 
 
